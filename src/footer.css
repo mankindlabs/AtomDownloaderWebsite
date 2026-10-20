@@ -1,0 +1,34 @@
+.footer .footer-signature {
+  display: grid;
+  grid-template-columns: 1fr minmax(0, auto) 1fr;
+  align-items: center;
+  gap: 24px;
+  padding-block: 24px 8px;
+}
+.footer-credit {
+  grid-column: 2;
+  margin: 0;
+  text-align: center;
+  color: #6b7481;
+  font-size: 11px;
+  line-height: 1.8;
+}
+.footer-signature .mankind-logo {
+  grid-column: 3;
+  justify-self: end;
+  width: 112px;
+  max-height: 64px;
+  object-fit: contain;
+}
+@media (max-width: 800px) {
+  .footer .footer-signature {
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 20px;
+  }
+  .footer-credit { grid-column: 1; font-size: 10px; }
+  .footer-signature .mankind-logo { grid-column: 2; width: 80px; }
+}
+@media (max-width: 480px) {
+  .footer .footer-signature { grid-template-columns: 1fr; gap: 18px; }
+  .footer-signature .mankind-logo { grid-column: 1; }
+}

@@ -1,0 +1,42 @@
+.architecture-dialog{max-width:620px;overflow:auto;max-height:calc(100dvh - 32px);padding:36px;isolation:isolate}.architecture-dialog>img{width:75px;height:75px;margin-bottom:18px}.architecture-dialog h2 span{color:var(--blue)}.architecture-options{display:grid;grid-template-columns:1fr 1fr;gap:14px;position:relative;z-index:1}.architecture-options button{display:flex;flex-direction:column;align-items:center;gap:14px;padding:22px 14px;border:1px solid #d9e3f4;border-radius:18px;background:linear-gradient(145deg,#fff,#edf4ff);transition:transform .2s,box-shadow .2s,border-color .2s}.architecture-options button:hover{transform:translateY(-4px);border-color:var(--blue);box-shadow:0 12px 28px #185df51a}.architecture-artwork{width:100%;height:95px;object-fit:contain}.architecture-options strong{display:block;font-size:14px;font-weight:500;line-height:1.5}.architecture-options small{display:block;font-size:11px;color:var(--muted);margin-top:7px}.architecture-options svg{color:var(--blue)}.architecture-dialog .chip-help{font-size:11px;margin:22px 0 12px}.installer-status{font-size:12px;line-height:1.7;color:var(--blue);min-height:22px}.download-confetti{position:absolute;inset:0;overflow:hidden;pointer-events:none;border-radius:inherit;z-index:2}.download-confetti i{position:absolute;top:-18px;width:8px;height:13px;opacity:0}.architecture-dialog[open] .download-confetti i{animation:download-celebrate var(--duration) var(--delay) ease-out both}@keyframes download-celebrate{0%{opacity:0;transform:translate3d(0,-20px,0) rotate(0)}10%{opacity:1}75%{opacity:1}100%{opacity:0;transform:translate3d(var(--drift),650px,0) rotate(var(--spin))}}.architecture-dialog .dialog-close{z-index:3;min-width:36px;min-height:36px}@media(max-width:480px){.architecture-dialog{padding:30px 18px}.architecture-options{gap:10px}.architecture-options button{padding:18px 9px}.architecture-artwork{height:70px}.architecture-options strong{font-size:12px}.architecture-options small{font-size:10px}.architecture-dialog h2{font-size:30px}}@media(prefers-reduced-motion:reduce){.architecture-dialog[open] .download-confetti i{animation:none}.architecture-options button{transition:none}.architecture-options button:hover{transform:none}}
+
+@property --chase-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+.download-dialog.architecture-dialog {
+  width: calc(100% - 32px);
+  max-width: 880px;
+  padding: 34px 38px 24px;
+  border: 2px solid transparent;
+  border-radius: 12px;
+  background: linear-gradient(#fafbf9, #fafbf9) padding-box,
+    conic-gradient(from var(--chase-angle), #cddcf5 0deg, #cddcf5 95deg, #64baff 140deg, #185df5 168deg, #eefaff 180deg, #cddcf5 184deg, #cddcf5 275deg, #a58aff 320deg, #185df5 348deg, #eefaff 360deg) border-box;
+  box-shadow: 0 30px 100px #0003, 0 0 32px #185df526;
+}
+.download-dialog.architecture-dialog[open] {
+  display: grid;
+  grid-template-columns: 1fr 1.35fr;
+  column-gap: 32px;
+  align-items: center;
+  animation: border-chase 4s linear infinite;
+}
+.architecture-dialog > img { grid-column: 1; margin: 0 auto 12px; }
+.architecture-dialog > .eyebrow { grid-column: 1; }
+.architecture-dialog > h2 { grid-column: 1; margin: 14px 0 0; }
+.architecture-dialog > #download-description { grid-column: 1; margin: 14px 0; }
+.architecture-dialog > .architecture-options { grid-column: 2; grid-row: 1 / 5; }
+.architecture-dialog > .chip-help { grid-column: 1 / -1; margin: 24px 0 8px; }
+.architecture-dialog > .installer-status { grid-column: 1 / -1; }
+.architecture-dialog .architecture-options button { border-radius: 10px; min-height: 230px; justify-content: center; }
+@keyframes border-chase { to { --chase-angle: 360deg; } }
+@media (max-width: 680px) {
+  .download-dialog.architecture-dialog { padding: 28px 18px 18px; max-width: 480px; }
+  .download-dialog.architecture-dialog[open] { display: block; }
+  .architecture-dialog .architecture-options button { min-height: 190px; }
+  .architecture-dialog > .architecture-options { margin-top: 20px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .download-dialog.architecture-dialog[open] { animation: none; }
+}
