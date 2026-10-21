@@ -79,8 +79,8 @@ export default function App() {
   const [faq, setFaq] = useState(0);
   const notice = useRef(null);
   const download = () => notice.current.showModal();
-  const downloadButton = (className = '') => <button className={`button button-blue ${className}`} onClick={download}><AppleIcon /><span>Download for Mac</span><ArrowUpRight className="download-arrow" size={18} /></button>;
-  const fullVersionLink = (className = '') => <a className={`button button-full ${className}`} href={FULL_VERSION_URL}><span>Full Version</span><ArrowUpRight className="download-arrow" size={18} /></a>;
+  const downloadButton = (className = '') => <button className={`button button-blue ${className}`} onClick={download}><AppleIcon /><span>Download Free for Mac</span><ArrowUpRight className="download-arrow" size={18} /></button>;
+  const fullVersionLink = (className = '') => <a className={`button button-full ${className}`} href="/pricing/"><span>Explore Atom Pro</span><ArrowUpRight className="download-arrow" size={18} /></a>;
   return <>
     <ParticleNetwork />
     <a href="#main" className="skip-link">Skip to content</a>
@@ -97,10 +97,10 @@ export default function App() {
     <main id="main">
       <section className="hero container" id="top">
         <div className="hero-copy">
-          <div className="eyebrow"><span className="status-dot" /> ATOM IDM · THE IDM FOR MAC</div>
-          <h1>Less waiting.<br />More <span className="blue-word">getting<br className="desktop-break" /> things done<svg viewBox="0 0 560 24" aria-hidden="true"><path d="M5 17 Q250 -4 550 12" /></svg></span>.</h1>
-          <p>Your files, on the fast track. Meet the download manager that brings a little more power—and a lot more personality—to your Mac.</p>
-          <div className="hero-actions">{downloadButton()}{fullVersionLink()}<a className="text-link" href="#experience">Meet your new sidekick <ArrowRight size={17} /></a></div>
+          <div className="eyebrow"><span className="status-dot" /> ATOM DOWNLOADER · THE MOST TRUSTED IDM FOR MAC</div>
+          <h1>Faster downloads.<br />Less <span className="blue-word">waiting<svg viewBox="0 0 560 24" aria-hidden="true"><path d="M5 17 Q250 -4 550 12" /></svg></span>.</h1>
+          <p>Meet Atom IDM, the powerful download manager that makes downloading and managing files on your Mac faster, simpler, and a whole lot more enjoyable.</p>
+          <div className="hero-actions">{downloadButton()}{fullVersionLink()}</div>
           <div className="hero-note"><Command size={14} /> Built for macOS <span /> By Mankind</div>
         </div>
         <div className="hero-art" aria-label="Atom’s blue elf mascot">
