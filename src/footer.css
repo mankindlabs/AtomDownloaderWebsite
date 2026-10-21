@@ -34,3 +34,6 @@
 }
 
 .footer-links{display:flex;gap:18px;flex-wrap:wrap;font-size:13px}.footer-links a{color:inherit;text-decoration:none}.footer-links a:hover{color:var(--blue)}
+
+.footer-payments{grid-column:1;justify-self:start;height:26px;width:auto;object-fit:contain}
+@media (max-width: 800px){.footer-payments{grid-column:1 / -1;height:22px}}
