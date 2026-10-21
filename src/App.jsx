@@ -13,7 +13,7 @@ import elfManagement from './assets/elf8.png';
 import elfMac from './assets/elf10.png';
 import mankindLogo from './assets/Mankind_Logo.png';
 import './footer.css';
-import { DOWNLOAD_URL, SUPPORT_EMAIL, FULL_VERSION_URL } from './config.js';
+import { DOWNLOAD_URL, SUPPORT_EMAIL } from './config.js';
 
 const asset = name => `/assets/${name}.webp`;
 const heroElves = [

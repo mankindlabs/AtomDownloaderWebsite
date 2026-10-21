@@ -1,13 +1,13 @@
 import React, { forwardRef } from 'react';
 import { Check, X } from 'lucide-react';
 import elfPro from './assets/elf_pro.png';
-import { LICENSE_API } from './config.js';
+import { PRO_PAY_URL, ULTRA_PAY_URL } from './config.js';
 import './download-chooser.css';
 
 const tiers = [
   { name: 'Free', price: '$0', note: 'Free forever', features: ['One download at a time', 'Auto-resume after Wi-Fi drops', 'Security check on every file'], action: 'free' },
-  { name: 'Pro', price: '$25', note: 'One-time · yours forever', popular: true, features: ['Everything in Free', 'Many downloads at once', 'Hugging Face & GitHub repos'], action: `${LICENSE_API}/checkout?plan=pro` },
-  { name: 'Ultra', price: '$39.99', note: 'One-time · yours forever', features: ['Everything in Pro', 'brew · npm · pip installs', 'Every feature, unlocked'], action: `${LICENSE_API}/checkout` },
+  { name: 'Pro', price: '$25', note: 'One-time · yours forever', popular: true, features: ['Everything in Free', 'Many downloads at once', 'Hugging Face & GitHub repos'], action: PRO_PAY_URL },
+  { name: 'Ultra', price: '$39.99', note: 'One-time · yours forever', features: ['Everything in Pro', 'brew · npm · pip installs', 'Every feature, unlocked'], action: ULTRA_PAY_URL },
 ];
 
 /// The pricing popup: tiers and features, without leaving the page.
