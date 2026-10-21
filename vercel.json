@@ -1,0 +1,14 @@
+{
+  "redirects": [
+    {
+      "source": "/faq",
+      "destination": "/about/",
+      "permanent": true
+    },
+    {
+      "source": "/faq/",
+      "destination": "/about/",
+      "permanent": true
+    }
+  ]
+}
