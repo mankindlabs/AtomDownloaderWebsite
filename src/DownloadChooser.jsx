@@ -1,8 +1,8 @@
 import React, { forwardRef, useState } from 'react';
-import { ArrowDownToLine, Cpu, X } from 'lucide-react';
-import elfIcon from '../../THE_ELVES/elf_icon.png';
-import siliconArtwork from '../../THE_ELVES/Apple_Silicon.7987975f.png';
-import intelArtwork from '../../THE_ELVES/Intel.ba0f8ebb.png';
+import { X } from 'lucide-react';
+import elfIcon from './assets/elf_icon.png';
+import siliconArtwork from './assets/Apple_Silicon.7987975f.png';
+import intelArtwork from './assets/Intel.ba0f8ebb.png';
 import { DOWNLOAD_INTEL_URL, DOWNLOAD_SILICON_URL } from './config.js';
 import './download-chooser.css';
 
@@ -34,8 +34,8 @@ const DownloadChooser = forwardRef(function DownloadChooser(_, ref) {
     <h2 id="download-title">Your Mac.<br /><span>Your kind of Atom.</span></h2>
     <p id="download-description">Pick your Mac’s chip. We’ll take it from here.</p>
     <div className="architecture-options">
-      <button onClick={() => choose('Mac Intel', DOWNLOAD_INTEL_URL)}><img className="architecture-artwork" src={intelArtwork} alt="" /><span><strong>Download for Mac Intel</strong><small>For Macs with an Intel processor</small></span><ArrowDownToLine size={19} /></button>
-      <button onClick={() => choose('Mac Apple Silicon', DOWNLOAD_SILICON_URL)}><img className="architecture-artwork" src={siliconArtwork} alt="" /><span><strong>Download for Mac Apple Silicon</strong><small>For Macs with an Apple M-series chip</small></span><ArrowDownToLine size={19} /></button>
+      <button onClick={() => choose('Mac Intel', DOWNLOAD_INTEL_URL)}><img className="architecture-artwork" src={intelArtwork} alt="" /><span><strong>Download for Mac Intel</strong><small>For Macs with an Intel processor</small></span></button>
+      <button onClick={() => choose('Mac Apple Silicon', DOWNLOAD_SILICON_URL)}><img className="architecture-artwork" src={siliconArtwork} alt="" /><span><strong>Download for Apple M-Chips</strong><small>For Macs with Apple Silicon Chips</small></span></button>
     </div>
     <p className="chip-help">Not sure? Open the Apple menu → <strong>About This Mac</strong> and look for Chip or Processor.</p>
     <div className="installer-status" role="status" aria-live="polite">{message}</div>

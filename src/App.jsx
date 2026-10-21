@@ -2,15 +2,15 @@ import React, { useEffect, useRef, useState } from 'react';
 import ParticleNetwork from './ParticleNetwork.jsx';
 import DownloadChooser from './DownloadChooser.jsx';
 import { ArrowUpRight, ArrowRight, Download, Plus, Minus, X, Menu, Zap, Layers, FolderDown, Command, Check, Cpu } from 'lucide-react';
-import elfIcon from '../../THE_ELVES/elf_icon.png';
-import elfPower from '../../THE_ELVES/elf9.png';
-import elfScanner from '../../THE_ELVES/elf7.png';
-import elfParallel from '../../THE_ELVES/elf6.png';
-import elfManagement from '../../THE_ELVES/elf8.png';
-import elfMac from '../../THE_ELVES/elf10.png';
-import mankindLogo from '../../THE_ELVES/Mankind_Logo.png';
+import elfIcon from './assets/elf_icon.png';
+import elfPower from './assets/elf9.png';
+import elfScanner from './assets/elf7.png';
+import elfParallel from './assets/elf6.png';
+import elfManagement from './assets/elf8.png';
+import elfMac from './assets/elf10.png';
+import mankindLogo from './assets/Mankind_Logo.png';
 import './footer.css';
-import { DOWNLOAD_URL, SUPPORT_EMAIL } from './config.js';
+import { DOWNLOAD_URL, SUPPORT_EMAIL, FULL_VERSION_URL } from './config.js';
 
 const asset = name => `/assets/${name}.webp`;
 const heroElves = [
@@ -74,6 +74,7 @@ export default function App() {
   const notice = useRef(null);
   const download = () => notice.current.showModal();
   const downloadButton = (className = '') => <button className={`button button-blue ${className}`} onClick={download}><AppleIcon /><span>Download for Mac</span><ArrowUpRight className="download-arrow" size={18} /></button>;
+  const fullVersionLink = (className = '') => <a className={`button button-full ${className}`} href={FULL_VERSION_URL} target="_blank" rel="noopener noreferrer"><span>Full Version</span><ArrowUpRight className="download-arrow" size={18} /></a>;
   return <>
     <ParticleNetwork />
     <a href="#main" className="skip-link">Skip to content</a>
@@ -81,7 +82,7 @@ export default function App() {
       <div className="nav container">
         <a className="brand" href="#top" aria-label="Atom Downloader home"><img src={elfIcon} alt="" /><span>atom<span className="brand-dot">.</span><small>DOWNLOADER</small></span></a>
         <nav id="navigation" aria-label="Main navigation" className={menu ? 'navigation open' : 'navigation'}>
-          <a href="#experience" onClick={() => setMenu(false)}>The experience</a><a href="#powercore" onClick={() => setMenu(false)}>Under the hood</a><a href="#questions" onClick={() => setMenu(false)}>Good to know</a>
+          <a href={FULL_VERSION_URL} target="_blank" rel="noopener noreferrer" onClick={() => setMenu(false)}>Full Version</a><a href="#experience" onClick={() => setMenu(false)}>The experience</a><a href="#powercore" onClick={() => setMenu(false)}>Under the hood</a><a href="#questions" onClick={() => setMenu(false)}>Good to know</a>
         </nav>
         <button className="nav-cta" onClick={download}>Get Atom <ArrowUpRight size={16} /></button>
         <button className="menu-toggle" aria-label={menu ? 'Close navigation' : 'Open navigation'} aria-expanded={menu} aria-controls="navigation" onClick={() => setMenu(!menu)}>{menu ? <X /> : <Menu />}</button>
@@ -93,7 +94,7 @@ export default function App() {
           <div className="eyebrow"><span className="status-dot" /> A LITTLE MAGIC. MADE FOR MAC.</div>
           <h1>Less waiting.<br />More <span className="blue-word">getting<br className="desktop-break" /> things done<svg viewBox="0 0 560 24" aria-hidden="true"><path d="M5 17 Q250 -4 550 12" /></svg></span>.</h1>
           <p>Your files, on the fast track. Meet the download manager that brings a little more power—and a lot more personality—to your Mac.</p>
-          <div className="hero-actions">{downloadButton()}<a className="text-link" href="#experience">Meet your new sidekick <ArrowRight size={17} /></a></div>
+          <div className="hero-actions">{downloadButton()}{fullVersionLink()}<a className="text-link" href="#experience">Meet your new sidekick <ArrowRight size={17} /></a></div>
           <div className="hero-note"><Command size={14} /> Built for macOS <span /> By Mankind</div>
         </div>
         <div className="hero-art" aria-label="Atom’s blue elf mascot">
@@ -118,7 +119,7 @@ export default function App() {
       <section className="engine" id="powercore"><div className="container engine-inner"><div className="engine-copy"><span className="eyebrow">02 / SMALL ELF. SERIOUS ENGINE.</span><h2>Looks like magic.<br />Runs on <em>Powercore.</em></h2><p>Behind the personality is a multi-part download engine. AtomPowercore breaks files into segments and brings them down in parallel. One file. More ways to get it moving.</p><div className="engine-chips"><span><Layers size={16} /> Multi-part transfers</span><span><Cpu size={16} /> One focused engine</span></div><small>Real-world speeds vary by connection and source server.</small></div><div className="engine-visual"><div className="engine-grid" /><div className="engine-node"><Zap size={42} fill="currentColor" /><b>AtomPowercore</b><small>PARALLEL BY DESIGN</small></div><div className="segment segment-one"><span /><span /><span /><span /></div><div className="segment segment-two"><span /><span /><span /><span /></div><div className="segment segment-three"><span /><span /><span /><span /></div><span className="engine-label">MULTIPLE SEGMENTS. ONE DESTINATION.</span><img src={asset('elf-powercore')} alt="AtomPowercore elf" loading="lazy" /></div></div></section>
 
       <section className="faq-section container section" id="questions"><div><span className="eyebrow">03 / THE LITTLE DETAILS</span><h2>Good questions.<br />Straight answers.</h2><p>No mystery. Just a little magic.</p><span className="faq-star" aria-hidden="true">✳</span></div><div className="faq-list">{questions.map(([question, answer], index) => <article className={`faq-item ${faq === index ? 'active' : ''}`} key={question}><h3><button aria-expanded={faq === index} aria-controls={`answer-${index}`} onClick={() => setFaq(faq === index ? -1 : index)}>{question}{faq === index ? <Minus size={18} /> : <Plus size={18} />}</button></h3><div id={`answer-${index}`} hidden={faq !== index}><p>{answer}</p></div></article>)}</div></section>
-      <section className="final-cta container" id="download"><div className="cta-circle" /><div className="cta-copy"><span className="eyebrow">YOUR MAC’S NEXT GOOD THING.</span><h2>Go on.<br />Give your downloads<br />a little <span>superpower.</span></h2>{downloadButton('button-white')}<p>Atom Downloader. By Mankind. For your Mac.</p></div><img src={asset('elf-secure')} alt="Your Atom elf is ready" loading="lazy" /><span className="cta-star" aria-hidden="true">✳</span></section>
+      <section className="final-cta container" id="download"><div className="cta-circle" /><div className="cta-copy"><span className="eyebrow">YOUR MAC’S NEXT GOOD THING.</span><h2>Go on.<br />Give your downloads<br />a little <span>superpower.</span></h2><div className="cta-actions">{downloadButton('button-white')}{fullVersionLink('button-full-light')}</div><p>Atom Downloader. By Mankind. For your Mac.</p></div><img src={asset('elf-secure')} alt="Your Atom elf is ready" loading="lazy" /><span className="cta-star" aria-hidden="true">✳</span></section>
     </main>
     <footer className="footer container"><div className="footer-top"><a className="brand" href="#top"><img src={elfIcon} alt="" /><span>atom<span className="brand-dot">.</span><small>DOWNLOADER</small></span></a><p>Less waiting. More possibility.</p><a className="back-top" href="#top">Back to top <ArrowUpRight size={16} /></a></div><div className="footer-bottom footer-signature"><p className="footer-credit">Made with ❤️ by Mankind Research Corporation © 2014 - 2024</p><img className="mankind-logo" src={mankindLogo} alt="Mankind" loading="lazy" /></div></footer>
     <DownloadChooser ref={notice} />
