@@ -40,3 +40,4 @@
 @media (prefers-reduced-motion: reduce) {
   .download-dialog.architecture-dialog[open] { animation: none; }
 }
+.license-dialog{max-width:520px;isolation:isolate}.license-dialog .dialog-close{z-index:3}.license-dialog .button{margin-inline:auto}.license-dialog[open] .download-confetti i{animation:download-celebrate var(--duration) var(--delay) ease-out both}@media(prefers-reduced-motion:reduce){.license-dialog[open] .download-confetti i{animation:none}}

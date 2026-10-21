@@ -3,4 +3,6 @@ export const DOWNLOAD_SILICON_URL = import.meta.env.VITE_DOWNLOAD_SILICON_URL?.t
 export const DOWNLOAD_URL = import.meta.env.VITE_DOWNLOAD_URL?.trim() || '';
 export const MIN_MACOS = 'macOS • Check system requirements';
 export const SUPPORT_EMAIL = import.meta.env.VITE_SUPPORT_EMAIL?.trim() || '';
-export const FULL_VERSION_URL = 'https://www.paypal.com/ncp/payment/53YZS4B373U7Y';
+// The license server: Full Version checkout and .license delivery.
+export const LICENSE_API = import.meta.env.VITE_LICENSE_API?.trim() || 'https://atomdownloader-license.atomidm.workers.dev';
+export const FULL_VERSION_URL = `${LICENSE_API}/checkout`;

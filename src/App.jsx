@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import ParticleNetwork from './ParticleNetwork.jsx';
 import DownloadChooser from './DownloadChooser.jsx';
+import LicenseClaim from './LicenseClaim.jsx';
 import { ArrowUpRight, ArrowRight, Download, Plus, Minus, X, Menu, Zap, Layers, FolderDown, Command, Check, Cpu } from 'lucide-react';
 import elfIcon from './assets/elf_icon.png';
 import elfPower from './assets/elf9.png';
@@ -74,7 +75,7 @@ export default function App() {
   const notice = useRef(null);
   const download = () => notice.current.showModal();
   const downloadButton = (className = '') => <button className={`button button-blue ${className}`} onClick={download}><AppleIcon /><span>Download for Mac</span><ArrowUpRight className="download-arrow" size={18} /></button>;
-  const fullVersionLink = (className = '') => <a className={`button button-full ${className}`} href={FULL_VERSION_URL} target="_blank" rel="noopener noreferrer"><span>Full Version</span><ArrowUpRight className="download-arrow" size={18} /></a>;
+  const fullVersionLink = (className = '') => <a className={`button button-full ${className}`} href={FULL_VERSION_URL}><span>Full Version</span><ArrowUpRight className="download-arrow" size={18} /></a>;
   return <>
     <ParticleNetwork />
     <a href="#main" className="skip-link">Skip to content</a>
@@ -82,7 +83,7 @@ export default function App() {
       <div className="nav container">
         <a className="brand" href="#top" aria-label="Atom Downloader home"><img src={elfIcon} alt="" /><span>atom<span className="brand-dot">.</span><small>DOWNLOADER</small></span></a>
         <nav id="navigation" aria-label="Main navigation" className={menu ? 'navigation open' : 'navigation'}>
-          <a href={FULL_VERSION_URL} target="_blank" rel="noopener noreferrer" onClick={() => setMenu(false)}>Full Version</a><a href="#experience" onClick={() => setMenu(false)}>The experience</a><a href="#powercore" onClick={() => setMenu(false)}>Under the hood</a><a href="#questions" onClick={() => setMenu(false)}>Good to know</a>
+          <a href={FULL_VERSION_URL} onClick={() => setMenu(false)}>Full Version</a><a href="#experience" onClick={() => setMenu(false)}>The experience</a><a href="#powercore" onClick={() => setMenu(false)}>Under the hood</a><a href="#questions" onClick={() => setMenu(false)}>Good to know</a>
         </nav>
         <button className="nav-cta" onClick={download}>Get Atom <ArrowUpRight size={16} /></button>
         <button className="menu-toggle" aria-label={menu ? 'Close navigation' : 'Open navigation'} aria-expanded={menu} aria-controls="navigation" onClick={() => setMenu(!menu)}>{menu ? <X /> : <Menu />}</button>
@@ -123,5 +124,6 @@ export default function App() {
     </main>
     <footer className="footer container"><div className="footer-top"><a className="brand" href="#top"><img src={elfIcon} alt="" /><span>atom<span className="brand-dot">.</span><small>DOWNLOADER</small></span></a><p>Less waiting. More possibility.</p><a className="back-top" href="#top">Back to top <ArrowUpRight size={16} /></a></div><div className="footer-bottom footer-signature"><p className="footer-credit">Made with ❤️ by Mankind Research Corporation © 2014 - 2024</p><img className="mankind-logo" src={mankindLogo} alt="Mankind" loading="lazy" /></div></footer>
     <DownloadChooser ref={notice} />
+    <LicenseClaim />
   </>;
 }
