@@ -56,7 +56,7 @@ function HeroElves() {
     };
   }, [paused]);
   return <>
-    <div className="floating-label label-power"><span className="label-icon">{active === 0 ? <BadgeCheck size={21} /> : active === 3 ? <Layers size={21} /> : active === 4 ? <FolderDown size={21} /> : active === 5 ? <Command size={21} /> : active === 2 ? <Check size={21} /> : <Zap size={21} fill="currentColor" />}</span><div><small>{heroElves[active][2]}</small><strong>{heroElves[active][3]}</strong></div></div>
+    <div className={`floating-label label-power ${active === 0 ? 'label-up' : ''}`}><span className="label-icon">{active === 0 ? <BadgeCheck size={21} /> : active === 3 ? <Layers size={21} /> : active === 4 ? <FolderDown size={21} /> : active === 5 ? <Command size={21} /> : active === 2 ? <Check size={21} /> : <Zap size={21} fill="currentColor" />}</span><div><small>{heroElves[active][2]}</small><strong>{heroElves[active][3]}</strong></div></div>
     <div className="elf-slides" role="img" aria-label={`Atom elf: ${heroElves[active][1]}`}>
       {heroElves.map(([name], index) => <img key={name} className={`main-elf elf-slide ${index === active ? 'is-active' : ''}`} src={name} alt="" aria-hidden="true" fetchPriority={index === 0 ? 'high' : 'auto'} />)}
     </div>
