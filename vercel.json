@@ -2,13 +2,19 @@
   "redirects": [
     {
       "source": "/faq",
-      "destination": "/about/",
+      "destination": "/",
       "permanent": true
     },
     {
       "source": "/faq/",
-      "destination": "/about/",
+      "destination": "/",
       "permanent": true
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/(download|features|pricing|about)/?",
+      "destination": "/index.html"
     }
   ]
 }

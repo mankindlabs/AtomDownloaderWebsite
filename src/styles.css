@@ -11,3 +11,5 @@
 .button-full{background:#fff;color:var(--blue);border:1px solid #185df540}.button-full-light{background:transparent;color:#fff;border:1px solid #ffffff80;box-shadow:none}.button-full-light:hover{background:#ffffff1a}.cta-actions{display:flex;gap:16px;flex-wrap:wrap;align-items:center}
 
 .label-power{transition:transform .5s ease}.label-power.label-up{transform:rotate(-5deg) translateY(-110px)}
+
+.scroll-anchor{display:block;height:0}

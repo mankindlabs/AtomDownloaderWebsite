@@ -75,12 +75,16 @@ const questions = [
 ];
 
 export default function App() {
+  useEffect(() => {
+    const id = { '/download/': 'download', '/features/': 'features', '/pricing/': 'pricing', '/about/': 'about' }[window.location.pathname.replace(/\/?$/, '/')];
+    if (id) requestAnimationFrame(() => document.getElementById(id)?.scrollIntoView());
+  }, []);
   const [menu, setMenu] = useState(false);
   const [faq, setFaq] = useState(0);
   const notice = useRef(null);
   const download = () => notice.current.showModal();
   const downloadButton = (className = '') => <button className={`button button-blue ${className}`} onClick={download}><AppleIcon /><span>Download Free for Mac</span><ArrowUpRight className="download-arrow" size={18} /></button>;
-  const fullVersionLink = (className = '') => <a className={`button button-full ${className}`} href="/pricing/"><span>Explore Atom Pro</span><ArrowUpRight className="download-arrow" size={18} /></a>;
+  const fullVersionLink = (className = '') => <a className={`button button-full ${className}`} href="#pricing"><span>Explore Atom Pro</span><ArrowUpRight className="download-arrow" size={18} /></a>;
   return <>
     <ParticleNetwork />
     <a href="#main" className="skip-link">Skip to content</a>
@@ -88,7 +92,7 @@ export default function App() {
       <div className="nav container">
         <a className="brand" href="#top" aria-label="Atom Downloader home"><img src={elfIcon} alt="" /><span>atom<span className="brand-dot">.</span><small>DOWNLOADER</small></span></a>
         <nav id="navigation" aria-label="Main navigation" className={menu ? 'navigation open' : 'navigation'}>
-          <a href="/download/">Download Atom IDM</a><a href="/features/">Features</a><a href="/pricing/">Pricing</a><a href="/about/">About Atom IDM</a>
+          <a href="#download" onClick={() => setMenu(false)}>Download Atom IDM</a><a href="#features" onClick={() => setMenu(false)}>Features</a><a href="#pricing" onClick={() => setMenu(false)}>Pricing</a><a href="#about" onClick={() => setMenu(false)}>About Atom IDM</a>
         </nav>
         <button className="nav-cta" onClick={download}>Get Atom <ArrowUpRight size={16} /></button>
         <button className="menu-toggle" aria-label={menu ? 'Close navigation' : 'Open navigation'} aria-expanded={menu} aria-controls="navigation" onClick={() => setMenu(!menu)}>{menu ? <X /> : <Menu />}</button>
@@ -113,7 +117,7 @@ export default function App() {
       </section>
       <div className="principles container"><span>NOT JUST ANOTHER<br /><b>DOWNLOAD MANAGER.</b></span><div><Zap /> Parallel by nature</div><div><Command /> Mac at heart</div><div><FolderDown /> Less download chaos</div><div className="principle-last">A little more <i>Atom.</i></div></div>
 
-      <section className="experience container section" id="experience">
+      <span id="features" className="scroll-anchor" /><section className="experience container section" id="experience">
         <div className="section-heading"><div><span className="eyebrow">01 / THE EVERYDAY UPGRADE</span><h2>Your downloads.<br />Minus the drama.</h2></div><p>Big ideas. Heavy files. A busy day.<br />Atom helps you get back to what matters,<br />with a download experience that just feels right.</p></div>
         <div className="bento-grid">
           <article className="feature feature-speed"><div className="feature-copy"><span className="feature-number">01 — PICK UP THE PACE</span><h3>Big files.<br />Small interruption.</h3><p>Parallel connections put more of your connection to work. Less staring at a progress bar. More moving forward.</p></div><img src={asset('elf-fast')} alt="Atom elf bringing energy to your downloads" loading="lazy" /><div className="speed-lines" aria-hidden="true"><span /><span /><span /></div><span className="card-tag"><Zap size={14} /> Powered by AtomPowercore</span></article>
@@ -122,12 +126,12 @@ export default function App() {
         </div>
       </section>
 
-      <section className="engine" id="powercore"><div className="container engine-inner"><div className="engine-copy"><span className="eyebrow">02 / SMALL ELF. SERIOUS ENGINE.</span><h2>Looks like magic.<br />Runs on <em>Powercore.</em></h2><p>Behind the personality is a multi-part download engine. AtomPowercore breaks files into segments and brings them down in parallel. One file. More ways to get it moving.</p><div className="engine-chips"><span><Layers size={16} /> Multi-part transfers</span><span><Cpu size={16} /> One focused engine</span></div><small>Real-world speeds vary by connection and source server.</small></div><div className="engine-visual"><div className="engine-grid" /><div className="engine-node"><Zap size={42} fill="currentColor" /><b>AtomPowercore</b><small>PARALLEL BY DESIGN</small></div><div className="segment segment-one"><span /><span /><span /><span /></div><div className="segment segment-two"><span /><span /><span /><span /></div><div className="segment segment-three"><span /><span /><span /><span /></div><span className="engine-label">MULTIPLE SEGMENTS. ONE DESTINATION.</span><img src={asset('elf-powercore')} alt="AtomPowercore elf" loading="lazy" /></div></div></section>
+      <span id="about" className="scroll-anchor" /><section className="engine" id="powercore"><div className="container engine-inner"><div className="engine-copy"><span className="eyebrow">02 / SMALL ELF. SERIOUS ENGINE.</span><h2>Looks like magic.<br />Runs on <em>Powercore.</em></h2><p>Behind the personality is a multi-part download engine. AtomPowercore breaks files into segments and brings them down in parallel. One file. More ways to get it moving.</p><div className="engine-chips"><span><Layers size={16} /> Multi-part transfers</span><span><Cpu size={16} /> One focused engine</span></div><small>Real-world speeds vary by connection and source server.</small></div><div className="engine-visual"><div className="engine-grid" /><div className="engine-node"><Zap size={42} fill="currentColor" /><b>AtomPowercore</b><small>PARALLEL BY DESIGN</small></div><div className="segment segment-one"><span /><span /><span /><span /></div><div className="segment segment-two"><span /><span /><span /><span /></div><div className="segment segment-three"><span /><span /><span /><span /></div><span className="engine-label">MULTIPLE SEGMENTS. ONE DESTINATION.</span><img src={asset('elf-powercore')} alt="AtomPowercore elf" loading="lazy" /></div></div></section>
 
       <section className="faq-section container section" id="questions"><div><span className="eyebrow">03 / THE LITTLE DETAILS</span><h2>Good questions.<br />Straight answers.</h2><p>No mystery. Just a little magic.</p><span className="faq-star" aria-hidden="true">✳</span></div><div className="faq-list">{questions.map(([question, answer], index) => <article className={`faq-item ${faq === index ? 'active' : ''}`} key={question}><h3><button aria-expanded={faq === index} aria-controls={`answer-${index}`} onClick={() => setFaq(faq === index ? -1 : index)}>{question}{faq === index ? <Minus size={18} /> : <Plus size={18} />}</button></h3><div id={`answer-${index}`} hidden={faq !== index}><p>{answer}</p></div></article>)}</div></section>
-      <section className="final-cta container" id="download"><div className="cta-circle" /><div className="cta-copy"><span className="eyebrow">YOUR MAC’S NEXT GOOD THING.</span><h2>Go on.<br />Give your downloads<br />a little <span>superpower.</span></h2><div className="cta-actions">{downloadButton('button-white')}{fullVersionLink('button-full-light')}</div><p>Atom Downloader. By Mankind. For your Mac.</p></div><img src={asset('elf-secure')} alt="Your Atom elf is ready" loading="lazy" /><span className="cta-star" aria-hidden="true">✳</span></section>
+      <span id="pricing" className="scroll-anchor" /><section className="final-cta container" id="download"><div className="cta-circle" /><div className="cta-copy"><span className="eyebrow">YOUR MAC’S NEXT GOOD THING.</span><h2>Go on.<br />Give your downloads<br />a little <span>superpower.</span></h2><div className="cta-actions">{downloadButton('button-white')}{fullVersionLink('button-full-light')}</div><p>Atom Downloader. By Mankind. For your Mac.</p></div><img src={asset('elf-secure')} alt="Your Atom elf is ready" loading="lazy" /><span className="cta-star" aria-hidden="true">✳</span></section>
     </main>
-    <footer className="footer container"><div className="footer-top"><a className="brand" href="#top"><img src={elfIcon} alt="" /><span>atom<span className="brand-dot">.</span><small>DOWNLOADER</small></span></a><p>Atom IDM — Atom Downloader is the Secure Internet Download Manager for Mac.</p><nav className="footer-links" aria-label="Site"><a href="/download/">Download Atom IDM</a><a href="/features/">Features</a><a href="/pricing/">Pricing</a><a href="/about/">About Atom IDM</a></nav><a className="back-top" href="#top">Back to top <ArrowUpRight size={16} /></a></div><div className="footer-bottom footer-signature"><p className="footer-credit">Made with ❤️ by Mankind Research Corporation © 2014 - 2024</p><img className="mankind-logo" src={mankindLogo} alt="Mankind" loading="lazy" /></div></footer>
+    <footer className="footer container"><div className="footer-top"><a className="brand" href="#top"><img src={elfIcon} alt="" /><span>atom<span className="brand-dot">.</span><small>DOWNLOADER</small></span></a><p>Atom IDM — Atom Downloader is the Secure Internet Download Manager for Mac.</p><nav className="footer-links" aria-label="Site"><a href="#download">Download Atom IDM</a><a href="#features">Features</a><a href="#pricing">Pricing</a><a href="#about">About Atom IDM</a></nav><a className="back-top" href="#top">Back to top <ArrowUpRight size={16} /></a></div><div className="footer-bottom footer-signature"><p className="footer-credit">Made with ❤️ by Mankind Research Corporation © 2014 - 2024</p><img className="mankind-logo" src={mankindLogo} alt="Mankind" loading="lazy" /></div></footer>
     <DownloadChooser ref={notice} />
     <LicenseClaim />
   </>;
