@@ -99,7 +99,7 @@ export default function App() {
         <div className="hero-copy">
           <div className="eyebrow"><span className="status-dot" /> ATOM DOWNLOADER · THE MOST TRUSTED IDM FOR MAC</div>
           <h1>Faster downloads.<br />Less <span className="blue-word">waiting<svg viewBox="0 0 560 24" aria-hidden="true"><path d="M5 17 Q250 -4 550 12" /></svg></span>.</h1>
-          <p>Meet Atom IDM, the powerful download manager that makes downloading and managing files on your Mac faster, simpler, and a whole lot more enjoyable.</p>
+          <p>Meet Atom IDM, the powerful download manager that makes downloading and managing files on your Mac faster, simpler, secure and a whole lot more enjoyable.</p>
           <div className="hero-actions">{downloadButton()}{fullVersionLink()}</div>
           <div className="hero-note"><Command size={14} /> Built for macOS <span /> By Mankind</div>
         </div>
