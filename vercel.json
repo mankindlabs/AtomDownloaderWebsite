@@ -13,7 +13,35 @@
   ],
   "rewrites": [
     {
-      "source": "/(download|features|pricing|about)/?",
+      "source": "/download",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/features",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/pricing",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/about",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/download/",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/features/",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/pricing/",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/about/",
       "destination": "/index.html"
     }
   ]
