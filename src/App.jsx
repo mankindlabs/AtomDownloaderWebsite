@@ -63,10 +63,12 @@ function HeroElves() {
   </>;
 }
 const questions = [
-  ['What is Atom Downloader?', 'Atom Downloader is a download manager for Mac by Mankind. It brings parallel downloading and file management together in a focused, Mac-first experience.'],
-  ['What is AtomPowercore?', 'AtomPowercore is the engine behind Atom. Its multi-part approach downloads file segments in parallel. Actual download speeds depend on your connection and the source server.'],
-  ['Where can I get the Mac app?', 'Use any Download for Mac button on this page. When the official installer is connected, it will take you directly to the download. Until then, we’ll show a clear availability notice.'],
-  ['Is Atom available for Windows?', 'This page is for Atom Downloader for Mac. We’re not announcing availability for other platforms here.'],
+  ["Is Atom IDM the IDM for Mac?", "Yes. Atom IDM (Atom Downloader) is an Internet Download Manager built for macOS. It splits files into parts and downloads them in parallel, resumes after Wi-Fi drops, and checks every file before you open it."],
+  ["Does Atom IDM run on Apple Silicon and Intel Macs?", "Yes. There is a native Apple Silicon build and a Universal build for Intel Macs. Both are signed and notarized by Apple."],
+  ["Does Atom IDM resume broken downloads?", "Yes. If your connection drops, Atom IDM waits for the network to come back and carries on from where it stopped, without starting over."],
+  ["Is Atom IDM free?", "There is a free version that downloads one file at a time. Pro ($25) and Ultra ($39.99) are one-time purchases — no subscription."],
+  ["What is the difference between Pro and Ultra?", "Pro unlocks many downloads at once plus Hugging Face and GitHub repositories. Ultra adds brew, npm and pip installs. Both are pay once, keep forever."],
+  ["Is Atom IDM safe?", "Every download gets a security check before it is marked ready, and the app is signed and notarized by Apple."],
 ];
 
 export default function App() {
@@ -92,7 +94,7 @@ export default function App() {
     <main id="main">
       <section className="hero container" id="top">
         <div className="hero-copy">
-          <div className="eyebrow"><span className="status-dot" /> A LITTLE MAGIC. MADE FOR MAC.</div>
+          <div className="eyebrow"><span className="status-dot" /> ATOM IDM · THE IDM FOR MAC</div>
           <h1>Less waiting.<br />More <span className="blue-word">getting<br className="desktop-break" /> things done<svg viewBox="0 0 560 24" aria-hidden="true"><path d="M5 17 Q250 -4 550 12" /></svg></span>.</h1>
           <p>Your files, on the fast track. Meet the download manager that brings a little more power—and a lot more personality—to your Mac.</p>
           <div className="hero-actions">{downloadButton()}{fullVersionLink()}<a className="text-link" href="#experience">Meet your new sidekick <ArrowRight size={17} /></a></div>
@@ -122,7 +124,7 @@ export default function App() {
       <section className="faq-section container section" id="questions"><div><span className="eyebrow">03 / THE LITTLE DETAILS</span><h2>Good questions.<br />Straight answers.</h2><p>No mystery. Just a little magic.</p><span className="faq-star" aria-hidden="true">✳</span></div><div className="faq-list">{questions.map(([question, answer], index) => <article className={`faq-item ${faq === index ? 'active' : ''}`} key={question}><h3><button aria-expanded={faq === index} aria-controls={`answer-${index}`} onClick={() => setFaq(faq === index ? -1 : index)}>{question}{faq === index ? <Minus size={18} /> : <Plus size={18} />}</button></h3><div id={`answer-${index}`} hidden={faq !== index}><p>{answer}</p></div></article>)}</div></section>
       <section className="final-cta container" id="download"><div className="cta-circle" /><div className="cta-copy"><span className="eyebrow">YOUR MAC’S NEXT GOOD THING.</span><h2>Go on.<br />Give your downloads<br />a little <span>superpower.</span></h2><div className="cta-actions">{downloadButton('button-white')}{fullVersionLink('button-full-light')}</div><p>Atom Downloader. By Mankind. For your Mac.</p></div><img src={asset('elf-secure')} alt="Your Atom elf is ready" loading="lazy" /><span className="cta-star" aria-hidden="true">✳</span></section>
     </main>
-    <footer className="footer container"><div className="footer-top"><a className="brand" href="#top"><img src={elfIcon} alt="" /><span>atom<span className="brand-dot">.</span><small>DOWNLOADER</small></span></a><p>Less waiting. More possibility.</p><a className="back-top" href="#top">Back to top <ArrowUpRight size={16} /></a></div><div className="footer-bottom footer-signature"><p className="footer-credit">Made with ❤️ by Mankind Research Corporation © 2014 - 2024</p><img className="mankind-logo" src={mankindLogo} alt="Mankind" loading="lazy" /></div></footer>
+    <footer className="footer container"><div className="footer-top"><a className="brand" href="#top"><img src={elfIcon} alt="" /><span>atom<span className="brand-dot">.</span><small>DOWNLOADER</small></span></a><p>Atom IDM — the Internet Download Manager for Mac.</p><nav className="footer-links" aria-label="Site"><a href="/download/">Download</a><a href="/pricing/">Pricing</a><a href="/features/">Features</a><a href="/faq/">FAQ</a></nav><a className="back-top" href="#top">Back to top <ArrowUpRight size={16} /></a></div><div className="footer-bottom footer-signature"><p className="footer-credit">Made with ❤️ by Mankind Research Corporation © 2014 - 2024</p><img className="mankind-logo" src={mankindLogo} alt="Mankind" loading="lazy" /></div></footer>
     <DownloadChooser ref={notice} />
     <LicenseClaim />
   </>;
