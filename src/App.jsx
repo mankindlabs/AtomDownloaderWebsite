@@ -85,7 +85,7 @@ export default function App() {
       <div className="nav container">
         <a className="brand" href="#top" aria-label="Atom Downloader home"><img src={elfIcon} alt="" /><span>atom<span className="brand-dot">.</span><small>DOWNLOADER</small></span></a>
         <nav id="navigation" aria-label="Main navigation" className={menu ? 'navigation open' : 'navigation'}>
-          <a href={FULL_VERSION_URL} onClick={() => setMenu(false)}>Full Version</a><a href="#experience" onClick={() => setMenu(false)}>The experience</a><a href="#powercore" onClick={() => setMenu(false)}>Under the hood</a><a href="#questions" onClick={() => setMenu(false)}>Good to know</a>
+          <a href="/download/">Download Atom IDM</a><a href="/features/">Features</a><a href="/pricing/">Pricing</a><a href="/about/">About Atom IDM</a>
         </nav>
         <button className="nav-cta" onClick={download}>Get Atom <ArrowUpRight size={16} /></button>
         <button className="menu-toggle" aria-label={menu ? 'Close navigation' : 'Open navigation'} aria-expanded={menu} aria-controls="navigation" onClick={() => setMenu(!menu)}>{menu ? <X /> : <Menu />}</button>
