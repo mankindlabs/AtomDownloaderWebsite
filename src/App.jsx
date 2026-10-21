@@ -2,8 +2,9 @@ import React, { useEffect, useRef, useState } from 'react';
 import ParticleNetwork from './ParticleNetwork.jsx';
 import DownloadChooser from './DownloadChooser.jsx';
 import LicenseClaim from './LicenseClaim.jsx';
-import { ArrowUpRight, ArrowRight, Download, Plus, Minus, X, Menu, Zap, Layers, FolderDown, Command, Check, Cpu } from 'lucide-react';
+import { ArrowUpRight, ArrowRight, Download, Plus, Minus, X, Menu, Zap, Layers, FolderDown, Command, Check, Cpu, BadgeCheck } from 'lucide-react';
 import elfIcon from './assets/elf_icon.png';
+import elfPro from './assets/elf_pro.png';
 import elfPower from './assets/elf9.png';
 import elfScanner from './assets/elf7.png';
 import elfParallel from './assets/elf6.png';
@@ -15,6 +16,7 @@ import { DOWNLOAD_URL, SUPPORT_EMAIL, FULL_VERSION_URL } from './config.js';
 
 const asset = name => `/assets/${name}.webp`;
 const heroElves = [
+  [elfPro, 'Atom IDM Pro License for $25', 'Atom IDM Pro License', 'Just $25 · yours forever'],
   [elfPower, 'A lil power with AtomPowerCore', 'A lil power with', 'AtomPowerCore'],
   [elfScanner, 'Secure links with Link Scanner', 'Secure links with', 'Link Scanner'],
   [elfParallel, 'Fast Parallel downloads', 'Fast', 'Parallel downloads'],
@@ -22,6 +24,7 @@ const heroElves = [
   [elfMac, 'Loved and works on all Macs', 'Loved and works on', 'All Macs'],
 ];
 const heroTaglines = [
+  'Pay once. Keep it forever.',
   'Big files. Meet little power.',
   'Scan first. Download confidently.',
   'More lanes. Less waiting.',
@@ -53,7 +56,7 @@ function HeroElves() {
     };
   }, [paused]);
   return <>
-    <div className="floating-label label-power"><span className="label-icon">{active === 2 ? <Layers size={21} /> : active === 3 ? <FolderDown size={21} /> : active === 4 ? <Command size={21} /> : active === 1 ? <Check size={21} /> : <Zap size={21} fill="currentColor" />}</span><div><small>{heroElves[active][2]}</small><strong>{heroElves[active][3]}</strong></div></div>
+    <div className="floating-label label-power"><span className="label-icon">{active === 0 ? <BadgeCheck size={21} /> : active === 3 ? <Layers size={21} /> : active === 4 ? <FolderDown size={21} /> : active === 5 ? <Command size={21} /> : active === 2 ? <Check size={21} /> : <Zap size={21} fill="currentColor" />}</span><div><small>{heroElves[active][2]}</small><strong>{heroElves[active][3]}</strong></div></div>
     <div className="elf-slides" role="img" aria-label={`Atom elf: ${heroElves[active][1]}`}>
       {heroElves.map(([name], index) => <img key={name} className={`main-elf elf-slide ${index === active ? 'is-active' : ''}`} src={name} alt="" aria-hidden="true" fetchPriority={index === 0 ? 'high' : 'auto'} />)}
     </div>
