@@ -1,13 +1,12 @@
 import React, { forwardRef } from 'react';
 import { Check, X } from 'lucide-react';
 import elfPro from './assets/elf_pro.png';
-import { PRO_PAY_URL, ULTRA_PAY_URL } from './config.js';
 import './download-chooser.css';
 
 const tiers = [
   { name: 'Free', price: '$0', note: 'Free forever', features: ['One download at a time', 'Auto-resume after Wi-Fi drops', 'Security check on every file'], action: 'free' },
-  { name: 'Pro', price: '$25', note: 'One-time · yours forever', popular: true, features: ['Everything in Free', 'Many downloads at once', 'Hugging Face & GitHub repos'], action: PRO_PAY_URL },
-  { name: 'Ultra', price: '$39.99', note: 'One-time · yours forever', features: ['Everything in Pro', 'brew · npm · pip installs', 'Every feature, unlocked'], action: ULTRA_PAY_URL },
+  { name: 'Pro', price: '$25', note: 'One-time · yours forever', popular: true, features: ['Everything in Free', 'Many downloads at once', 'Hugging Face & GitHub repos'], },
+  { name: 'Ultra', price: '$39.99', note: 'One-time · yours forever', features: ['Everything in Pro', 'brew · npm · pip installs', 'Every feature, unlocked'], },
 ];
 
 /// The pricing popup: tiers and features, without leaving the page.
@@ -26,12 +25,10 @@ const PricingDialog = forwardRef(function PricingDialog({ onFree }, ref) {
         <b>{tier.price}</b>
         <small>{tier.note}</small>
         <ul>{tier.features.map(f => <li key={f}><Check size={14} />{f}</li>)}</ul>
-        {tier.action === 'free'
-          ? <button className="button pricing-cta" onClick={() => { close(); onFree(); }}>Download Free</button>
-          : <a className={`button pricing-cta ${tier.popular ? 'button-blue' : ''}`} href={tier.action}>Get {tier.name}</a>}
+        <button className={`button pricing-cta ${tier.popular ? 'button-blue' : ''}`} onClick={() => { close(); onFree(); }}>{tier.action === 'free' ? 'Download Free' : `Download, then get ${tier.name} in the app`}</button>
       </div>)}
     </div>
-    <p className="pricing-foot">Your license file downloads right after payment and unlocks Atom on your Mac at once.</p>
+    <p className="pricing-foot">Upgrade inside Atom Downloader — card, PayPal or Apple Pay — and it unlocks on the spot.</p>
   </dialog>;
 });
 

@@ -1,9 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import ParticleNetwork from './ParticleNetwork.jsx';
 import DownloadChooser from './DownloadChooser.jsx';
-import LicenseClaim from './LicenseClaim.jsx';
 import PricingDialog from './PricingDialog.jsx';
-import InfoDialog from './InfoDialog.jsx';
+import InfoPage from './InfoPage.jsx';
 import { pageFor, HOME_TITLE, HOME_DESCRIPTION } from './pages.js';
 import { ArrowUpRight, ArrowRight, Download, Plus, Minus, X, Menu, Zap, Layers, FolderDown, Command, Check, Cpu, BadgeCheck } from 'lucide-react';
 import elfIcon from './assets/elf_icon.png';
@@ -82,9 +81,9 @@ const questions = [
 
 export default function App() {
   const [menu, setMenu] = useState(false);
-  const [info, setInfo] = useState(null);
-  const infoRef = useRef(null);
-  // Real addresses for Google; visitors never leave the download page.
+  // Help and policy addresses are full pages; the rest stay on the download page.
+  const [here] = useState(() => pageFor(window.location.pathname));
+  const onInfoPage = here?.kind === 'info';
   const show = (path, push = true) => {
     const page = pageFor(path);
     setMenu(false);
@@ -93,17 +92,21 @@ export default function App() {
     document.querySelector('meta[name="description"]')?.setAttribute('content', page ? page.description : HOME_DESCRIPTION);
     if (!page) return;
     if (page.kind === 'pricing') pricingRef.current?.showModal();
-    else if (page.kind === 'info') { setInfo(page); requestAnimationFrame(() => infoRef.current?.showModal()); }
-    else document.getElementById(page.target)?.scrollIntoView({ behavior: push ? 'smooth' : 'auto' });
+    else if (page.kind === 'scroll') document.getElementById(page.target)?.scrollIntoView({ behavior: push ? 'smooth' : 'auto' });
   };
-  const go = path => event => { event.preventDefault(); show(path); };
+  // A full page, or a section of the home page while on a full page, loads normally.
+  const go = path => event => {
+    const page = pageFor(path);
+    if (page?.kind === 'info' || (onInfoPage && page?.kind === 'scroll')) return;
+    event.preventDefault(); show(path);
+  };
   useEffect(() => {
     requestAnimationFrame(() => show(window.location.pathname, false));
     const back = () => show(window.location.pathname, false);
     // Closing a popup puts the address back to the home page.
     const closed = event => {
       const page = pageFor(window.location.pathname);
-      if (page && page.kind !== 'scroll' && (event.target === infoRef.current || event.target === pricingRef.current)) {
+      if (page?.kind === 'pricing' && event.target === pricingRef.current) {
         history.pushState(null, '', '/'); document.title = HOME_TITLE;
       }
     };
@@ -123,7 +126,7 @@ export default function App() {
     <a href="#main" className="skip-link">Skip to content</a>
     <header className="header">
       <div className="nav container">
-        <a className="brand" href="#top" aria-label="Atom Downloader home"><img src={elfIcon} alt="" /><span>atom<span className="brand-dot">.</span><small>DOWNLOADER</small></span></a>
+        <a className="brand" href="/" aria-label="Atom Downloader home"><img src={elfIcon} alt="" /><span>atom<span className="brand-dot">.</span><small>DOWNLOADER</small></span></a>
         <nav id="navigation" aria-label="Main navigation" className={menu ? 'navigation open' : 'navigation'}>
           <a href="/download" onClick={go('/download')}>Download Atom IDM</a><a href="/features" onClick={go('/features')}>Features</a><a href="/pricing" onClick={pricing}>Pricing</a><a href="/about" onClick={go('/about')}>About Atom IDM</a>
         </nav>
@@ -131,7 +134,7 @@ export default function App() {
         <button className="menu-toggle" aria-label={menu ? 'Close navigation' : 'Open navigation'} aria-expanded={menu} aria-controls="navigation" onClick={() => setMenu(!menu)}>{menu ? <X /> : <Menu />}</button>
       </div>
     </header>
-    <main id="main">
+    {onInfoPage ? <InfoPage page={here} downloadButton={downloadButton} /> : <main id="main">
       <section className="hero container" id="top">
         <div className="hero-copy">
           <div className="eyebrow"><span className="status-dot" /> ATOM DOWNLOADER · THE MOST TRUSTED IDM FOR MAC</div>
@@ -164,13 +167,11 @@ export default function App() {
 
       <section className="faq-section container section" id="questions"><div><span className="eyebrow">03 / THE LITTLE DETAILS</span><h2>Good questions.<br />Straight answers.</h2><p>No mystery. Just a little magic.</p><span className="faq-star" aria-hidden="true">✳</span></div><div className="faq-list">{questions.map(([question, answer], index) => <article className={`faq-item ${faq === index ? 'active' : ''}`} key={question}><h3><button aria-expanded={faq === index} aria-controls={`answer-${index}`} onClick={() => setFaq(faq === index ? -1 : index)}>{question}{faq === index ? <Minus size={18} /> : <Plus size={18} />}</button></h3><div id={`answer-${index}`} hidden={faq !== index}><p>{answer}</p></div></article>)}</div></section>
       <section className="final-cta container" id="download"><div className="cta-circle" /><div className="cta-copy"><span className="eyebrow">YOUR MAC’S NEXT GOOD THING.</span><h2>Go on.<br />Give your downloads<br />a little <span>superpower.</span></h2><div className="cta-actions">{downloadButton('button-white')}{fullVersionLink('button-full-light')}</div><p>Atom Downloader. By Mankind. For your Mac.</p></div><img src={asset('elf-secure')} alt="Your Atom elf is ready" loading="lazy" /><span className="cta-star" aria-hidden="true">✳</span></section>
-    </main>
-    <footer className="footer container"><div className="footer-top"><a className="brand" href="#top"><img src={elfIcon} alt="" /><span>atom<span className="brand-dot">.</span><small>DOWNLOADER</small></span></a><p>Atom IDM — Atom Downloader is the Secure Internet Download Manager for Mac.</p><nav className="footer-links" aria-label="Site"><a href="/download" onClick={go('/download')}>Download Atom IDM</a><a href="/features" onClick={go('/features')}>Features</a><a href="/pricing" onClick={pricing}>Pricing</a><a href="/about" onClick={go('/about')}>About Atom IDM</a></nav><a className="back-top" href="#top">Back to top <ArrowUpRight size={16} /></a></div><nav className="footer-links footer-help" aria-label="Help and policies">{[['/support', 'Support & Contact'], ['/how-to-use-idm-on-mac', 'How to use IDM on Mac'], ['/update', 'Update Atom IDM'], ['/privacy', 'Privacy'], ['/terms', 'Terms'], ['/refund', 'Refunds']].map(([path, label]) => <a key={path} href={path} onClick={go(path)}>{label}</a>)}</nav>
+    </main>}
+    <footer className="footer container"><div className="footer-top"><a className="brand" href="/"><img src={elfIcon} alt="" /><span>atom<span className="brand-dot">.</span><small>DOWNLOADER</small></span></a><p>Atom IDM — Atom Downloader is the Secure Internet Download Manager for Mac.</p><nav className="footer-links" aria-label="Site"><a href="/download" onClick={go('/download')}>Download Atom IDM</a><a href="/features" onClick={go('/features')}>Features</a><a href="/pricing" onClick={pricing}>Pricing</a><a href="/about" onClick={go('/about')}>About Atom IDM</a></nav><a className="back-top" href="#main">Back to top <ArrowUpRight size={16} /></a></div><nav className="footer-links footer-help" aria-label="Help and policies">{[['/support', 'Support & Contact'], ['/how-to-use-idm-on-mac', 'How to use IDM on Mac'], ['/update', 'Update Atom IDM'], ['/privacy', 'Privacy'], ['/terms', 'Terms'], ['/refund', 'Refunds']].map(([path, label]) => <a key={path} href={path} onClick={go(path)}>{label}</a>)}</nav>
       <p className="footer-disclaimer">Atom IDM is made by Mankind Research Corporation. It is not affiliated with Tonec Inc.’s Internet Download Manager (IDM) or GitHub’s Atom editor.</p>
       <div className="footer-bottom footer-signature"><img className="footer-payments" src={paymentLogos} alt="We accept Mastercard, Visa, Apple Pay and PayPal" loading="lazy" /><p className="footer-credit">Made with ❤️ by Mankind Research Corporation © 2014 - 2026</p><img className="mankind-logo" src={mankindLogo} alt="Mankind" loading="lazy" /></div></footer>
     <DownloadChooser ref={notice} />
     <PricingDialog ref={pricingRef} onFree={download} />
-    <InfoDialog ref={infoRef} page={info} onDownload={download} />
-    <LicenseClaim />
-  </>;
+      </>;
 }

@@ -27,7 +27,7 @@ export const pages = {
     title: 'Pricing — Atom IDM Free, Pro $25, Ultra $39.99 (One-Time)',
     description: 'Atom IDM is free to start. Pro is $25 and Ultra is $39.99 — pay once, keep it forever. No subscription. Card, PayPal and Apple Pay.',
     heading: 'Atom IDM pricing',
-    sections: [['', 'Free: one download at a time, auto-resume and security checks. Pro, $25 one-time: many downloads at once plus Hugging Face and GitHub repos. Ultra, $39.99 one-time: everything in Pro plus brew, npm and pip installs.']],
+    sections: [['', 'Free: one download at a time, auto-resume and security checks. Pro, $25 one-time: many downloads at once plus Hugging Face and GitHub repos. Ultra, $39.99 one-time: everything in Pro plus brew, npm and pip installs. Buy inside the app after downloading it free.']],
   },
   '/about': {
     kind: 'scroll', target: 'about',
@@ -43,8 +43,9 @@ export const pages = {
     heading: 'Support & contact',
     sections: [
       ['Email us', `Write to ${SUPPORT_EMAIL}. Include your Mac model, your macOS version and, for purchases, the email you paid with. We usually reply within one business day.`],
-      ['Bought Atom and it didn’t unlock?', 'Email us the address you paid with and your PayPal receipt number. We’ll send your license and unlock your Mac.'],
-      ['Moving to a new Mac?', 'Your purchase is yours forever. Email us from the address you paid with and we’ll unlock your new Mac.'],
+      ['How do I buy Pro or Ultra?', 'Inside the app. Download Atom Downloader free, click Get Full Version, and pay with card, PayPal or Apple Pay. It unlocks on the spot.'],
+      ['Bought Atom and it didn’t unlock?', 'Open Atom Downloader → Restore Purchase and enter the email you paid with and the transaction ID from your PayPal receipt. Still stuck? Email us both and we’ll unlock it for you.'],
+      ['Moving to a new Mac?', 'Your purchase is yours forever. Install Atom on the new Mac and use Restore Purchase with the same email and PayPal transaction ID.'],
     ],
   },
   '/how-to-use-idm-on-mac': {
@@ -66,7 +67,7 @@ export const pages = {
     heading: 'Update Atom IDM to the latest version',
     sections: [
       ['Which version do I have?', 'Open Atom Downloader, then choose Atom Downloader → About Atom Downloader from the menu bar.'],
-      ['How do I update?', 'Download the latest version from this site and drag it into Applications, choosing Replace. Your license, settings and downloads are kept.'],
+      ['How do I update?', 'Download the latest version from this site and drag it into Applications, choosing Replace. Your purchase, settings and downloads are kept.'],
       ['Latest version', 'Atom IDM 2.26 — Apple Silicon and Universal (Intel) builds, signed and notarized by Apple.'],
     ],
   },
@@ -78,7 +79,7 @@ export const pages = {
     sections: [
       ['On your Mac', 'Atom IDM downloads files straight from the sites you choose. Your downloads, links and history stay on your Mac and are not sent to us. Security checks run on your Mac.'],
       ['Payments', 'Payments are handled by PayPal (card, PayPal or Apple Pay). We never see your card number. PayPal shares your name, email and order number with us so we can issue your license.'],
-      ['Licenses', 'We keep your name, email and order number to issue your license, restore it later and answer support requests. We do not sell or share it.'],
+      ['Purchases', 'We keep your name, email and order number to unlock your Mac, let you Restore Purchase later and answer support requests. We do not sell or share it.'],
       ['This website', 'The site is hosted by Vercel, which keeps standard server logs. Downloads are served from GitHub.'],
       ['Contact', `Questions or a request to delete your data: ${SUPPORT_EMAIL}.`],
     ],
