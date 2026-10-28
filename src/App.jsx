@@ -3,6 +3,8 @@ import ParticleNetwork from './ParticleNetwork.jsx';
 import DownloadChooser from './DownloadChooser.jsx';
 import LicenseClaim from './LicenseClaim.jsx';
 import PricingDialog from './PricingDialog.jsx';
+import InfoDialog from './InfoDialog.jsx';
+import { pageFor, HOME_TITLE, HOME_DESCRIPTION } from './pages.js';
 import { ArrowUpRight, ArrowRight, Download, Plus, Minus, X, Menu, Zap, Layers, FolderDown, Command, Check, Cpu, BadgeCheck } from 'lucide-react';
 import elfIcon from './assets/elf_icon.png';
 import elfPro from './assets/elf_pro.png';
@@ -69,27 +71,53 @@ function HeroElves() {
 }
 const questions = [
   ["Is Atom IDM the IDM for Mac?", "Yes. Atom IDM (Atom Downloader) is an Internet Download Manager built for macOS. It splits files into parts and downloads them in parallel, resumes after Wi-Fi drops, and checks every file before you open it."],
+  ["How can I use IDM on Mac?", "The original IDM is Windows-only. Atom IDM is a download manager built for macOS: download it free, paste a link, and it downloads in parallel and resumes after Wi-Fi drops."],
   ["Does Atom IDM run on Apple Silicon and Intel Macs?", "Yes. There is a native Apple Silicon build and a Universal build for Intel Macs. Both are signed and notarized by Apple."],
   ["Does Atom IDM resume broken downloads?", "Yes. If your connection drops, Atom IDM waits for the network to come back and carries on from where it stopped, without starting over."],
   ["Is Atom IDM free?", "There is a free version that downloads one file at a time. Pro ($25) and Ultra ($39.99) are one-time purchases — no subscription."],
   ["What is the difference between Pro and Ultra?", "Pro unlocks many downloads at once plus Hugging Face and GitHub repositories. Ultra adds brew, npm and pip installs. Both are pay once, keep forever."],
+  ["How do I update Atom IDM?", "Download the latest version from atomdownloader.online and drag it into Applications, choosing Replace. Your license and downloads are kept."],
   ["Is Atom IDM safe?", "Every download gets a security check before it is marked ready, and the app is signed and notarized by Apple."],
 ];
 
 export default function App() {
-  useEffect(() => {
-    const id = { '/download/': 'download', '/features/': 'features', '/pricing/': 'pricing', '/about/': 'about' }[window.location.pathname.replace(/\/?$/, '/')];
-    if (id === 'pricing') requestAnimationFrame(() => pricingRef.current?.showModal());
-    else if (id) requestAnimationFrame(() => document.getElementById(id)?.scrollIntoView());
-  }, []);
   const [menu, setMenu] = useState(false);
+  const [info, setInfo] = useState(null);
+  const infoRef = useRef(null);
+  // Real addresses for Google; visitors never leave the download page.
+  const show = (path, push = true) => {
+    const page = pageFor(path);
+    setMenu(false);
+    if (push && window.location.pathname !== path) history.pushState(null, '', path);
+    document.title = page ? page.title : HOME_TITLE;
+    document.querySelector('meta[name="description"]')?.setAttribute('content', page ? page.description : HOME_DESCRIPTION);
+    if (!page) return;
+    if (page.kind === 'pricing') pricingRef.current?.showModal();
+    else if (page.kind === 'info') { setInfo(page); requestAnimationFrame(() => infoRef.current?.showModal()); }
+    else document.getElementById(page.target)?.scrollIntoView({ behavior: push ? 'smooth' : 'auto' });
+  };
+  const go = path => event => { event.preventDefault(); show(path); };
+  useEffect(() => {
+    requestAnimationFrame(() => show(window.location.pathname, false));
+    const back = () => show(window.location.pathname, false);
+    // Closing a popup puts the address back to the home page.
+    const closed = event => {
+      const page = pageFor(window.location.pathname);
+      if (page && page.kind !== 'scroll' && (event.target === infoRef.current || event.target === pricingRef.current)) {
+        history.pushState(null, '', '/'); document.title = HOME_TITLE;
+      }
+    };
+    window.addEventListener('popstate', back);
+    document.addEventListener('close', closed, true);
+    return () => { window.removeEventListener('popstate', back); document.removeEventListener('close', closed, true); };
+  }, []);
   const [faq, setFaq] = useState(0);
   const notice = useRef(null);
   const download = () => notice.current.showModal();
   const pricingRef = useRef(null);
-  const pricing = event => { event?.preventDefault(); setMenu(false); pricingRef.current.showModal(); };
+  const pricing = go('/pricing');
   const downloadButton = (className = '') => <button className={`button button-blue ${className}`} onClick={download}><AppleIcon /><span>Download Free for Mac</span><ArrowUpRight className="download-arrow" size={18} /></button>;
-  const fullVersionLink = (className = '') => <a className={`button button-full ${className}`} href="#pricing" onClick={pricing}><span>Explore Atom Pro</span><ArrowUpRight className="download-arrow" size={18} /></a>;
+  const fullVersionLink = (className = '') => <a className={`button button-full ${className}`} href="/pricing" onClick={pricing}><span>Explore Atom Pro</span><ArrowUpRight className="download-arrow" size={18} /></a>;
   return <>
     <ParticleNetwork />
     <a href="#main" className="skip-link">Skip to content</a>
@@ -97,7 +125,7 @@ export default function App() {
       <div className="nav container">
         <a className="brand" href="#top" aria-label="Atom Downloader home"><img src={elfIcon} alt="" /><span>atom<span className="brand-dot">.</span><small>DOWNLOADER</small></span></a>
         <nav id="navigation" aria-label="Main navigation" className={menu ? 'navigation open' : 'navigation'}>
-          <a href="#download" onClick={() => setMenu(false)}>Download Atom IDM</a><a href="#features" onClick={() => setMenu(false)}>Features</a><a href="#pricing" onClick={pricing}>Pricing</a><a href="#about" onClick={() => setMenu(false)}>About Atom IDM</a>
+          <a href="/download" onClick={go('/download')}>Download Atom IDM</a><a href="/features" onClick={go('/features')}>Features</a><a href="/pricing" onClick={pricing}>Pricing</a><a href="/about" onClick={go('/about')}>About Atom IDM</a>
         </nav>
         <button className="nav-cta" onClick={download}>Get Atom <ArrowUpRight size={16} /></button>
         <button className="menu-toggle" aria-label={menu ? 'Close navigation' : 'Open navigation'} aria-expanded={menu} aria-controls="navigation" onClick={() => setMenu(!menu)}>{menu ? <X /> : <Menu />}</button>
@@ -107,10 +135,11 @@ export default function App() {
       <section className="hero container" id="top">
         <div className="hero-copy">
           <div className="eyebrow"><span className="status-dot" /> ATOM DOWNLOADER · THE MOST TRUSTED IDM FOR MAC</div>
-          <h1>Faster downloads.<br />Less <span className="blue-word">waiting<svg viewBox="0 0 560 24" aria-hidden="true"><path d="M5 17 Q250 -4 550 12" /></svg></span>.</h1>
+          <h1><span className="sr-only">Atom IDM for Mac: </span>Faster downloads.<br />Less <span className="blue-word">waiting<svg viewBox="0 0 560 24" aria-hidden="true"><path d="M5 17 Q250 -4 550 12" /></svg></span>.</h1>
           <p>Meet Atom IDM, the powerful download manager that makes downloading and managing files on your Mac faster, simpler, secure and a whole lot more enjoyable.</p>
           <div className="hero-actions">{downloadButton()}{fullVersionLink()}</div>
           <div className="hero-note"><Command size={14} /> Built for macOS <span /> By Mankind</div>
+          <div className="trust-badge"><BadgeCheck size={15} /> Notarized by Apple · Developer ID 9KQ7T3ET28 · Mankind Research Corporation</div>
         </div>
         <div className="hero-art" aria-label="Atom’s blue elf mascot">
           <div className="orbit orbit-one" /><div className="orbit orbit-two" /><span className="orbit-spark spark-one">✳</span><span className="orbit-spark spark-two">+</span>
@@ -136,9 +165,12 @@ export default function App() {
       <section className="faq-section container section" id="questions"><div><span className="eyebrow">03 / THE LITTLE DETAILS</span><h2>Good questions.<br />Straight answers.</h2><p>No mystery. Just a little magic.</p><span className="faq-star" aria-hidden="true">✳</span></div><div className="faq-list">{questions.map(([question, answer], index) => <article className={`faq-item ${faq === index ? 'active' : ''}`} key={question}><h3><button aria-expanded={faq === index} aria-controls={`answer-${index}`} onClick={() => setFaq(faq === index ? -1 : index)}>{question}{faq === index ? <Minus size={18} /> : <Plus size={18} />}</button></h3><div id={`answer-${index}`} hidden={faq !== index}><p>{answer}</p></div></article>)}</div></section>
       <section className="final-cta container" id="download"><div className="cta-circle" /><div className="cta-copy"><span className="eyebrow">YOUR MAC’S NEXT GOOD THING.</span><h2>Go on.<br />Give your downloads<br />a little <span>superpower.</span></h2><div className="cta-actions">{downloadButton('button-white')}{fullVersionLink('button-full-light')}</div><p>Atom Downloader. By Mankind. For your Mac.</p></div><img src={asset('elf-secure')} alt="Your Atom elf is ready" loading="lazy" /><span className="cta-star" aria-hidden="true">✳</span></section>
     </main>
-    <footer className="footer container"><div className="footer-top"><a className="brand" href="#top"><img src={elfIcon} alt="" /><span>atom<span className="brand-dot">.</span><small>DOWNLOADER</small></span></a><p>Atom IDM — Atom Downloader is the Secure Internet Download Manager for Mac.</p><nav className="footer-links" aria-label="Site"><a href="#download">Download Atom IDM</a><a href="#features">Features</a><a href="#pricing" onClick={pricing}>Pricing</a><a href="#about">About Atom IDM</a></nav><a className="back-top" href="#top">Back to top <ArrowUpRight size={16} /></a></div><div className="footer-bottom footer-signature"><img className="footer-payments" src={paymentLogos} alt="We accept Mastercard, Visa, Apple Pay and PayPal" loading="lazy" /><p className="footer-credit">Made with ❤️ by Mankind Research Corporation © 2014 - 2026</p><img className="mankind-logo" src={mankindLogo} alt="Mankind" loading="lazy" /></div></footer>
+    <footer className="footer container"><div className="footer-top"><a className="brand" href="#top"><img src={elfIcon} alt="" /><span>atom<span className="brand-dot">.</span><small>DOWNLOADER</small></span></a><p>Atom IDM — Atom Downloader is the Secure Internet Download Manager for Mac.</p><nav className="footer-links" aria-label="Site"><a href="/download" onClick={go('/download')}>Download Atom IDM</a><a href="/features" onClick={go('/features')}>Features</a><a href="/pricing" onClick={pricing}>Pricing</a><a href="/about" onClick={go('/about')}>About Atom IDM</a></nav><a className="back-top" href="#top">Back to top <ArrowUpRight size={16} /></a></div><nav className="footer-links footer-help" aria-label="Help and policies">{[['/support', 'Support & Contact'], ['/how-to-use-idm-on-mac', 'How to use IDM on Mac'], ['/update', 'Update Atom IDM'], ['/privacy', 'Privacy'], ['/terms', 'Terms'], ['/refund', 'Refunds']].map(([path, label]) => <a key={path} href={path} onClick={go(path)}>{label}</a>)}</nav>
+      <p className="footer-disclaimer">Atom IDM is made by Mankind Research Corporation. It is not affiliated with Tonec Inc.’s Internet Download Manager (IDM) or GitHub’s Atom editor.</p>
+      <div className="footer-bottom footer-signature"><img className="footer-payments" src={paymentLogos} alt="We accept Mastercard, Visa, Apple Pay and PayPal" loading="lazy" /><p className="footer-credit">Made with ❤️ by Mankind Research Corporation © 2014 - 2026</p><img className="mankind-logo" src={mankindLogo} alt="Mankind" loading="lazy" /></div></footer>
     <DownloadChooser ref={notice} />
     <PricingDialog ref={pricingRef} onFree={download} />
+    <InfoDialog ref={infoRef} page={info} onDownload={download} />
     <LicenseClaim />
   </>;
 }

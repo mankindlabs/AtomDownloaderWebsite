@@ -1,48 +1,7 @@
 {
+  "cleanUrls": true,
+  "trailingSlash": false,
   "redirects": [
-    {
-      "source": "/faq",
-      "destination": "/",
-      "permanent": true
-    },
-    {
-      "source": "/faq/",
-      "destination": "/",
-      "permanent": true
-    }
-  ],
-  "rewrites": [
-    {
-      "source": "/download",
-      "destination": "/index.html"
-    },
-    {
-      "source": "/features",
-      "destination": "/index.html"
-    },
-    {
-      "source": "/pricing",
-      "destination": "/index.html"
-    },
-    {
-      "source": "/about",
-      "destination": "/index.html"
-    },
-    {
-      "source": "/download/",
-      "destination": "/index.html"
-    },
-    {
-      "source": "/features/",
-      "destination": "/index.html"
-    },
-    {
-      "source": "/pricing/",
-      "destination": "/index.html"
-    },
-    {
-      "source": "/about/",
-      "destination": "/index.html"
-    }
+    { "source": "/faq", "destination": "/", "permanent": true }
   ]
 }
